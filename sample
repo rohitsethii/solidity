@@ -1,0 +1,12 @@
+pragma solidity ^0.4.0;
+contract SampleStorage {
+uint _Data;
+function set(uint x)        //setter to set a value
+{
+_Data = x;
+}
+function get() constant returns (uint)         //getter to get(display only) some value
+{ 
+return _Data;
+}
+}
