@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="./node_modules/web3/dist/web3.min.js">
+    </script>
+    <style>
+        body {
+            background-color: ghostwhite;
+            margin: auto;
+            background-image: url("Ethereum.jpg");
+        }
+        
+        h1 {
+            color: black;
+            text-align: center;
+        }
+        
+        p {
+            font-family: verdana;
+            font-size: 20px;
+        }
+        
+        #info {
+            background-color: lightpink;
+            width: 50%;
+            align-content: left;
+            float: left;
+            align-items: right;
+            text-align-last: center;
+            background-image: url("Ethereum.jpg");
+        }
+        
+        #Send {
+            align-content: center;
+            background-color: lightpink;
+            align-items: right;
+            align-self: right;
+            text-align-last: center;
+            height: 60%;
+            width: 50%;
+            float: right;
+            position: "relative";
+            background-image: url("Ethereum.jpg");
+        }
+        
+        .main {
+            background-image: url("Ethereum.jpg");
+            /* Full height */
+            height: 100%;
+            /* Center and scale the image nicely */
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        #send {
+            align-items: right;
+        }
+        
+        #getbal {
+            align-items: right;
+        }
+    </style>
+</head>
+
+<body><b>
+    <div class="main">
+        
+        <div id="info">
+            <table>
+                <thead>
+            <h1> MY WALLET </h1>
+                </thead>
+           <tr> <td><b>Address:</b></td>
+    <td> </td>
+    <td> </td>
+    <td><input type="text" id="addr" value="0x00" /> </td>
+    </tr>
+    <tr>
+        <td>ETH Balance:</td>
+        <td> </td>
+        <td> </td>
+        <td><input type="text" id="bal" value="0.00" /> </td>
+    </tr>
+    <tr>
+        <td>Token:</td>
+        <td> </td>
+        <td> </td>
+        <td><input type="text" id="token" value="0" /></td>
+    </tr>
+    <tr>
+        <td> </td>
+        <td> </td>
+        <td> </td>
+        <td><input type="button" id="getbal" value="CHECK" /></td>
+    </tr>
+    </table>
+    </div>
+
+    <div id="Send">
+        <h1> SEND TOKENS </h1>
+        send To(address): <input type="text" id="addrto" value="0x00" /> </br>
+        Amount: <input type="text" id="amount" value="" /> </br>
+        <p></p>
+        <input type="button" id="send" value="SEND" />
+        <p> </p>
+    </div>
+    </div>
+    <script>
+        var web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+        web3.eth.defaultAccount = web3.eth.accounts[0];
+        var wallet = web3.eth.contract([{
+                "constant": true,
+                "inputs": [],
+                "name": "name",
+                "outputs": [{
+                    "name": "",
+                    "type": "string"
+                }],
+                "payable": false,
+                "type": "function"
+            }, {
+                "constant": true,
+                "inputs": [],
+                "name": "totalSupply",
+                "outputs": [{
+                    "name": "",
+                    "type": "uint256"
+                }],
+                "payable": false,
+                "type": "function"
+            }, {
+                "constant": true,
+                "inputs": [],
+                "name": "decimals",
+                "outputs": [{
+                    "name": "",
+                    "type": "uint8"
+                }],
+                "payable": false,
+                "type": "function"
+            }, {
+                "constant": true,
+                "inputs": [],
+                "name": "standard",
+                "outputs": [{
+                    "name": "",
+                    "type": "string"
+                }],
+                "payable": false,
+                "type": "function"
+            }, {
+                "constant": true,
+                "inputs": [{
+                    "name": "",
+                    "type": "address"
+                }],
+                "name": "balanceOf",
+                "outputs": [{
+                    "name": "",
+                    "type": "uint256"
+                }],
+                "payable": false,
+                "type": "function"
+            }, {
+                "constant": true,
+                "inputs": [],
+                "name": "symbol",
+                "outputs": [{
+                    "name": "",
+                    "type": "string"
+                }],
+                "payable": false,
+                "type": "function"
+            }, {
+                "constant": false,
+                "inputs": [{
+                    "name": "_to",
+                    "type": "address"
+                }, {
+                    "name": "_value",
+                    "type": "uint256"
+                }],
+                "name": "transfer",
+                "outputs": [],
+                "payable": false,
+                "type": "function"
+            }, {
+                "constant": true,
+                "inputs": [{
+                    "name": "",
+                    "type": "address"
+                }, {
+                    "name": "",
+                    "type": "address"
+                }],
+                "name": "allowance",
+                "outputs": [{
+                    "name": "",
+                    "type": "uint256"
+                }],
+                "payable": false,
+                "type": "function"
+            }, {
+                "inputs": [],
+                "payable": false,
+                "type": "constructor"
+            }, {
+                "anonymous": false,
+                "inputs": [{
+                    "indexed": true,
+                    "name": "from",
+                    "type": "address"
+                }, {
+                    "indexed": true,
+                    "name": "to",
+                    "type": "address"
+                }, {
+                    "indexed": false,
+                    "name": "value",
+                    "type": "uint256"
+                }],
+                "name": "Transfer",
+                "type": "event"
+            }, {
+                "anonymous": false,
+                "inputs": [{
+                    "indexed": true,
+                    "name": "from",
+                    "type": "address"
+                }, {
+                    "indexed": false,
+                    "name": "value",
+                    "type": "uint256"
+                }],
+                "name": "Burn",
+                "type": "event"
+            }]
+
+        );
+        var w = wallet.at(' 0x05e62cc04459325320cea5869c953da04c16bc98');
+        var addr = document.getElementById("addr");
+        var bal = document.getElementById("bal");
+        var getbal = document.getElementById("getbal");
+
+        getbal.addEventListener('click', function() {
+            /*     alert(w.Info(addr.value));*/
+
+            web3.eth.getBalance(addr.value, function(error, result) {
+                if (!error)
+                    console.log(result)
+                else
+                    console.error(error);
+                bal.value = result;
+                token.value = w.balanceOf(addr.value);
+            })
+        });
+
+
+
+        send.addEventListener('click', function() {
+            var isAddress = web3.isAddress(addrto.value);
+            if (isAddress = false)
+                alert("enter valid address");
+            w.transfer(addrto.value, amount.value);
+            alert("sent successfully");
+        });
+    </script>
+    </b>
+</body>
+
+</html>
